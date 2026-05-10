@@ -1,1 +1,6 @@
-# Programa que scanea un proyecto svelte y devuelve archivos no referenciados.
+# Programa en node que scanea un proyecto y devuelve archivos no referenciados.
+## Permitiendo limpiar el proyecto.
+
+*.css
+*.js
+*svelte
