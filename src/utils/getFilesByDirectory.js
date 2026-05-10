@@ -1,14 +1,14 @@
-const fs = require('node:fs')
-const path = require('node:path')
+import fs from 'node:fs'
+import path from 'node:path'
 
 //probar usar un set
 
-function getFilesByDirectory(directory) {
+export function getFilesByDirectory(directory) {
     const entries = fs.readdirSync(directory, { withFileTypes:true })
 
     let files = new Set()
 
-    for (entry of entries) {
+    for (const entry of entries) {
         const fullPath = path.resolve(directory, entry.name)
         if(entry.isDirectory()) {
             files = new Set([...files, ...getFilesByDirectory(fullPath)])
@@ -31,5 +31,3 @@ function getFilesByDirectory(directory) {
     return files
     
 }
-
-module.exports = getFilesByDirectory

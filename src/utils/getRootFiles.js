@@ -1,8 +1,6 @@
-const fs = require('node:fs')
-const path = require('node:path')
+import fs from 'node:fs'
+import path from 'node:path'
 
-function findRootFiles(directory) {
+export function findRootFiles(directory) {
     return new Set(fs.readdirSync(directory).filter(file => path.extname(file) === '.js').map(file => path.resolve(directory, file)) || [])
 }
-
-module.exports = findRootFiles

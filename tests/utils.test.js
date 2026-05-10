@@ -1,11 +1,11 @@
-const getUnusedFiles = require('../src/utils/getUnusedFiles')
-const getFilesByDirectory = require('../src/utils/getFilesByDirectory')
-const {getImportsFromFile, getImportsFromJSFile, getImportsFromSvelteFile} = require('../src/utils/getImportsFromFile')
-const getRootFiles = require('../src/utils/getRootFiles')
-const getUnusedFilesInDirectory = require('../src/main')
-const path = require('node:path');
+import {getUnusedFiles} from '../src/utils/getUnusedFiles'
+import {getFilesByDirectory} from '../src/utils/getFilesByDirectory'
+import {getImportsFromFile, getImportsFromJSFile, getImportsFromSvelteFile} from '../src/utils/getImportsFromFile'
+import {findRootFiles} from '../src/utils/getRootFiles'
+import {getUnusedFilesInDirectory} from '../src/main'
+import path from 'node:path';
 
-const directory = path.join(__dirname, 'test-components')
+const directory = path.join('./tests/test-components')
 
 test('getFilesByDirectory should return files in a directory recursively in an object with the paths as the keys', () => {
     const files =  getFilesByDirectory(directory)
@@ -14,7 +14,7 @@ test('getFilesByDirectory should return files in a directory recursively in an o
 })
 
 test('getRootFiles should return a set of the js files in the given directory', () => {
-    const rootFiles = getRootFiles(directory)
+    const rootFiles = findRootFiles(directory)
 
     expect(rootFiles).toEqual(new Set([path.resolve(directory, 'hola.js')]))
 })

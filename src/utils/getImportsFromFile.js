@@ -1,9 +1,9 @@
-const fs = require('node:fs')
-const path = require('node:path')
-const esprima = require('esprima');
+import fs from 'node:fs'
+import path from 'node:path'
+import esprima from 'esprima';
 
 
-function getImportsFromFile (filePath) {
+export function getImportsFromFile (filePath) {
     let imports = new Set()
     switch(path.extname(filePath)) {
         case '.js':
@@ -19,7 +19,7 @@ function getImportsFromFile (filePath) {
     return imports
 }
 
-function getImportsFromJSFile(filePath) {
+export function getImportsFromJSFile(filePath) {
     let imports = esprima.parseModule((fs.readFileSync(filePath,'utf-8'))).body
                     .filter(node => node.type === 'ImportDeclaration')
                     .map(node => path.resolve(path.dirname(filePath), node.source.value))
@@ -30,7 +30,7 @@ function getImportsFromJSFile(filePath) {
     return new Set()
 }
 
-function getImportsFromSvelteFile(filePath) {
+export function getImportsFromSvelteFile(filePath) {
     const regex = /<script[\s\S]*?>([\s\S]*?)<\/script>/g;
     const importRegex = /import\s+(?:.*?\s+from\s+)?['"](.*?)['"];?/gm;
     const svelteSrc = fs.readFileSync(filePath, 'utf-8')
@@ -47,9 +47,4 @@ function getImportsFromSvelteFile(filePath) {
         return new Set(imports)
     }
     return new Set()
-    
 }
-
-module.exports = { getImportsFromFile, getImportsFromJSFile, getImportsFromSvelteFile }
-
- 

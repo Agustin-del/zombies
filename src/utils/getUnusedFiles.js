@@ -1,10 +1,10 @@
-const path = require('node:path')
-const { getImportsFromFile} = require ('./getImportsFromFile')
+import path from 'node:path'
+import {getImportsFromFile} from './getImportsFromFile.js'
 
-function getUnusedFiles(rootFiles, files, usedFiles = new Set()) {
+export function getUnusedFiles(rootFiles, files, usedFiles = new Set()) {
     if(rootFiles.size === 0) return [...files]
     
-    for(rootFile of rootFiles) {
+    for(const rootFile of rootFiles) {
         usedFiles.add(rootFile)
 
         const imports = getImportsFromFile(rootFile)
@@ -12,12 +12,9 @@ function getUnusedFiles(rootFiles, files, usedFiles = new Set()) {
         getUnusedFiles(imports, files, usedFiles)
     }
 
-    for(usedFile of usedFiles) {
+    for(const usedFile of usedFiles) {
         files.delete(usedFile)
     }
 
     return [...files]
 }
-
- 
-module.exports = getUnusedFiles

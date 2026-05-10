@@ -1,15 +1,13 @@
-const getFilesByDirectory = require('./utils/getFilesByDirectory')
-const getRootFiles = require('./utils/getRootFiles')
-const getUnusedFiles = require('./utils/getUnusedFiles')
+import {getFilesByDirectory} from "./utils/getFilesByDirectory.js"
+import {findRootFiles} from './utils/getRootFiles.js'
+import {getUnusedFiles} from './utils/getUnusedFiles.js'
 
 // manejar como llega el directorio.
 
-function getUnusedFilesInDirectory(directory) {
+export function getUnusedFilesInDirectory(directory) {
     const files = getFilesByDirectory(directory)
-    const rootFiles = getRootFiles(directory)
+    const rootFiles = findRootFiles(directory)
     return getUnusedFiles(rootFiles, files)    
 }
 
-module.exports = getUnusedFilesInDirectory
-
- 
+console.log(getUnusedFilesInDirectory("."))
